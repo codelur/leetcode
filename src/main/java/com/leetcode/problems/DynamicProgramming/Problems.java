@@ -1,8 +1,81 @@
 package com.leetcode.problems.DynamicProgramming;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Problems {
+
+
+    static List<List<Integer>> nestedList = Arrays.asList(
+        Arrays.asList(2),
+        Arrays.asList(3, 4),
+        Arrays.asList(6, 5, 7),
+        Arrays.asList(4, 1, 8, 3)
+    );
+
+
+    //Problem 120 with memoization
+    private int minTotalDP (int i, int j, int[][] dp, List<List<Integer>> triangle){
+        if(i == dp.length-1)
+            return triangle.get(i).get(j);
+
+        if(dp[i][j] != -1)
+            return dp[i][j];
+
+        int goDown = triangle.get(i).get(j) + minTotalDP (i+1,j, dp, triangle);
+        int goRight = triangle.get(i).get(j) + minTotalDP (i+1,j+1, dp, triangle);
+
+        return dp[i][j] = Math.min(goDown,goRight);
+    }
+
+    public int minimumTotalwithDP(List<List<Integer>> triangle) {
+        int rows = triangle.size();
+        int columns = triangle.get(rows -1).size();
+        int[][] dp = new int[rows][columns];
+        //fill up the rows with the value -1, take the risk of recalculating
+        //if thevalue is -1 in calculations but take the risk to improve performance
+        for(int i=0;i<rows;i++)
+            Arrays.fill(dp[i],-1);
+
+        return minTotalDP (0,0, dp, triangle);
+
+    }
+
+    //Problem 120 not memoization
+    public int  minimumTotal(List<List<Integer>> triangle) {
+        //overwrtting the input
+
+        int rows = triangle.size();
+        for (int i = 1; i< rows;i++){
+            for(int j=0;j<triangle.get(i).size();j++){
+                int minAbove = Integer.MAX_VALUE;
+                //get the one on diagonal to the left
+                if(j>0)
+                    minAbove = triangle.get(i-1).get(j-1);
+                //get the one above and compare which is smaller
+                if(j<i)
+                    minAbove = Math.min(minAbove,triangle.get(i-1).get(j));
+
+                int value = minAbove +  triangle.get(i).get(j);
+                triangle.get(i).set(j,value);
+            }
+        }
+
+        return Collections.min(triangle.get(rows-1));
+
+    }
+
+    public static void main(String[] args) {
+        Problems problem = new Problems();
+        List<String> words = new ArrayList<>();
+        words.add("a");
+        words.add("0");
+        System.out.println(Collections.min(words));
+
+    }
+
 
     //Problem 583
     public int minDistance(String word1, String word2) {
@@ -76,7 +149,5 @@ public class Problems {
         return dp[n-1];
     }
 
-    public static void main(String[] args) {
-        System.out.println("Hello Worldaaa!");
-    }
+
 }
