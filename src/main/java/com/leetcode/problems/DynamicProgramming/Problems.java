@@ -3,7 +3,11 @@ package com.leetcode.problems.DynamicProgramming;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 public class Problems {
 
@@ -14,6 +18,58 @@ public class Problems {
         Arrays.asList(6, 5, 7),
         Arrays.asList(4, 1, 8, 3)
     );
+
+    //Problem 397
+    private HashMap<Long, Integer> memo = new HashMap<>();
+
+    private int numSteps(long i){
+        if (i==1)
+            return 0;
+
+        if(memo.containsKey(i))
+            return memo.get(i);
+
+        int steps = Integer.MAX_VALUE;
+        int stepPlus = Integer.MAX_VALUE;
+        int stepsMinus = Integer.MAX_VALUE;
+
+        if(i%2 == 0){
+            steps =  1 + numSteps(i/2);
+        }else{
+            stepPlus = 1 + numSteps(i+1);
+            stepsMinus = 1 + numSteps(i-1);
+        }
+        memo.put(i,Math.min (steps, Math.min (stepPlus,stepsMinus)));
+        return memo.get(i);
+    }
+
+    public int integerReplacement(int n) {
+        return numSteps(n);
+
+    }
+
+    //problem 264
+    public int nthUglyNumber(int n) {
+        PriorityQueue<Integer> uglies = new PriorityQueue<>();
+        Set<Integer> seenUglies = new HashSet<>();
+
+        uglies.add(1);
+        seenUglies.add(1);
+        for (int i=0;i<n;i++){
+
+            int factor = uglies.poll();
+            if(seenUglies.add(factor*2))
+                uglies.add(factor*2);
+            if(seenUglies.add(factor*3))
+                uglies.add(factor*3);
+            if(seenUglies.add(factor*5))
+                uglies.add(factor*5);
+        }
+
+        return uglies.poll();
+
+
+    }
 
     //Problem 125
     public int maxProduct(int[] nums) {
@@ -85,7 +141,10 @@ public class Problems {
     }
 
     public static void main(String[] args) {
+
         Problems problem = new Problems();
+
+        int a = problem.integerReplacement(8);
         List<String> words = new ArrayList<>();
         words.add("a");
         words.add("0");
