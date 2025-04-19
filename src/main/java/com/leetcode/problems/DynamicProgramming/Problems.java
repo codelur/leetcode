@@ -15,6 +15,23 @@ public class Problems {
         Arrays.asList(4, 1, 8, 3)
     );
 
+    //Problem 125
+    public int maxProduct(int[] nums) {
+
+        int minSoFar = 1;
+        int maxSoFar = 1;
+        int result = nums[0];
+        for(int number: nums){
+            int tempMax = maxSoFar * number;
+            int tempMin = minSoFar * number;
+            maxSoFar = Math.max(number,Math.max(tempMax,tempMin));
+            minSoFar = Math.min(number,Math.min(tempMax,tempMin));
+            result = Math.max(result,maxSoFar);
+        }
+
+        return result;
+    }
+
 
     //Problem 120 with memoization
     private int minTotalDP (int i, int j, int[][] dp, List<List<Integer>> triangle){
@@ -73,6 +90,15 @@ public class Problems {
         words.add("a");
         words.add("0");
         System.out.println(Collections.min(words));
+
+        int[][] array = new int[9][9];
+        for(int i=0;i<array.length;i++)
+            Arrays.fill(array[i],-1);
+
+        int[] array2 = array[0];
+        array2[0] = 0;
+        System.out.println(array[0][1]);
+
 
     }
 
