@@ -20,6 +20,47 @@ public class Problems {
         Arrays.asList(4, 1, 8, 3)
     );
 
+    //Problem 36 Sudoku validity
+    private boolean checkSubBox(int row,int column,char[][] board){
+        HashSet<Character> set = new HashSet<>();
+         for(int i=row;i<row+3;i++){
+
+            for(int j=column;j<column+3;j++){
+                if(board[i][j]!='.' && !set.add(board[i][j]))
+                    return false;
+            }
+         }
+         return true;
+    }
+
+
+    public boolean isValidSudoku(char[][] board) {
+        int rows = board.length;
+        int columns = board[0].length;
+        for(int i=0;i<rows;i++){
+            HashSet<Character> set = new HashSet<>();
+            for(int j=0;j<columns;j++){
+                if(board[i][j]!='.' && !set.add(board[i][j]))
+                    return false;
+            }
+        }
+        for(int j=0;j<columns;j++){
+            HashSet<Character> set = new HashSet<>();
+            for(int i=0;i<rows;i++){
+                if(board[i][j]!='.' && !set.add(board[i][j]))
+                    return false;
+            }
+        }
+
+        for(int i=0;i<rows;i=i+3)
+            for(int j=0;j<columns;j=j+3)
+                if(!checkSubBox(i,j,board))
+                    return false;
+
+        return true;
+
+    }
+
     //Problem 3517
     public String smallestPalindrome(String s) {
         StringBuffer result = new StringBuffer();
