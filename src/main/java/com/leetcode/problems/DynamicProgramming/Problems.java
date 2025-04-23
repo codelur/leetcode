@@ -20,6 +20,29 @@ public class Problems {
         Arrays.asList(4, 1, 8, 3)
     );
 
+    //Problem 3522
+    public long calculateScore(String[] instructions, int[] values) {
+        int n = values.length;
+        boolean[] visited = new boolean[n];
+        int i=0;
+        boolean repeated = false;
+        long score =0;
+        while(i>=0 && i<n){
+            visited[i] = true;
+            if(instructions[i].charAt(0) == 'j'){
+                i += values[i];
+            }else{
+                score += values[i];
+                i++;
+            }
+            if(i>=0 && i<n){
+                if(visited[i])
+                    return score;
+            }
+        }
+        return score;
+    }
+
     //Problem 155
     class MinStack {
 
@@ -52,7 +75,7 @@ public class Problems {
     public int getMin() {
         return min;
     }
-}
+    }
 
     //Problem 397
     private HashMap<Long, Integer> memo = new HashMap<>();
