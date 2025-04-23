@@ -20,6 +20,13 @@ public class Problems {
         Arrays.asList(4, 1, 8, 3)
     );
 
+    //Problem 3516
+    public int findClosest(int x, int y, int z) {
+        int a = Math.abs(z-x);
+        int b = Math.abs(z-y);
+        return (a<b)?1:((a>b)?2:0);
+    }
+
     //Problem 3522
     public long calculateScore(String[] instructions, int[] values) {
         int n = values.length;
