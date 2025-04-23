@@ -20,6 +20,19 @@ public class Problems {
         Arrays.asList(4, 1, 8, 3)
     );
 
+    //Problem 3517
+    public String smallestPalindrome(String s) {
+        StringBuffer result = new StringBuffer();
+        int mid = s.length()/2;
+        char[] word = s.substring(0,mid).toCharArray();
+        Arrays.sort(word);
+        String firstHalf = new String(word);
+        String secondHalf = new StringBuffer(firstHalf).reverse().toString();
+        if(s.length()%2==1)
+            firstHalf += s.charAt(mid);
+        return firstHalf + secondHalf;
+    }
+
     //Problem 3516
     public int findClosest(int x, int y, int z) {
         int a = Math.abs(z-x);
