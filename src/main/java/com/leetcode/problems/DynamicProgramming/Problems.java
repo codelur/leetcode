@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.Stack;
 
 public class Problems {
 
@@ -18,6 +19,40 @@ public class Problems {
         Arrays.asList(6, 5, 7),
         Arrays.asList(4, 1, 8, 3)
     );
+
+    //Problem 155
+    class MinStack {
+
+    Stack<Integer> stack;
+    int min;
+
+    public MinStack() {
+        stack = new Stack<>();
+        min = Integer.MAX_VALUE;
+    }
+
+    public void push(int val) {
+        if(val<=min){
+            stack.push(min);
+            min = val;
+        }
+        stack.push(val);
+    }
+
+    public void pop() {
+        if (min == stack.pop())
+            min = stack.pop();
+
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return min;
+    }
+}
 
     //Problem 397
     private HashMap<Long, Integer> memo = new HashMap<>();
