@@ -20,6 +20,35 @@ public class Problems {
         Arrays.asList(4, 1, 8, 3)
     );
 
+    //Problem 681
+    public String nextClosestTime(String time) {
+
+        HashSet<Integer> clockDigits = new HashSet<>();
+        for (char c: time.toCharArray()){
+             clockDigits.add(c-'0');
+        }
+
+        int timeInSeconds = Integer.parseInt(time.substring(0,2)) * 60
+             + Integer.parseInt(time.substring(3));
+
+         boolean notFound = false;
+         while (true){
+             timeInSeconds++;
+             int hour = (timeInSeconds % 1440) / 60;
+             int hourDigit1 = hour / 10;
+             int hourDigit2 = hour % 10;
+
+             int minutes = (timeInSeconds % 60) ;
+             int minutesDigit1 = minutes / 10;
+             int minutesDigit2 = minutes % 10;
+
+             if(clockDigits.contains(hourDigit1) && clockDigits.contains(hourDigit2)
+                 && clockDigits.contains(minutesDigit1) && clockDigits.contains(minutesDigit2))
+                     return (String) ""+hourDigit1 +""+ hourDigit2 +":" + minutesDigit1 +""+minutesDigit2;
+
+         }
+     }
+
     //Problem 163
     private List<Integer> getRangeList(int first, int last){
         List<Integer> range = new ArrayList<>();
