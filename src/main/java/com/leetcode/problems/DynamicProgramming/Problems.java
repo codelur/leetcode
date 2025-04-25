@@ -20,6 +20,44 @@ public class Problems {
         Arrays.asList(4, 1, 8, 3)
     );
 
+    //Problem 163
+    private List<Integer> getRangeList(int first, int last){
+        List<Integer> range = new ArrayList<>();
+        range.add(first);
+        range.add(last);
+        return range;
+    }
+
+    public List<List<Integer>> findMissingRanges(int[] nums, int lower, int upper) {
+
+        //list for the result of the function
+        List<List<Integer>> result = new ArrayList<>();
+
+        //check empty string
+        if(nums.length ==0) {
+            result.add(getRangeList(lower,upper));
+            return result;
+        }
+
+        //get the first range
+        if(nums[0]!=lower)
+            result.add(getRangeList(lower, nums[0]-1));
+
+        //get the rest of the ranges
+        for (int i=0;i<nums.length-1;i++){
+            if(nums[i+1] - nums[i] != 1){
+                result.add(getRangeList(nums[i]+1, nums[i+1]-1));
+            }
+
+        }
+
+        //get the last range
+        if(nums[nums.length-1]!=upper)
+            result.add(getRangeList(nums[nums.length-1]+1,upper));
+
+        return result;
+    }
+
     //Problem 36 Sudoku validity
     private boolean checkSubBox(int row,int column,char[][] board){
         HashSet<Character> set = new HashSet<>();
