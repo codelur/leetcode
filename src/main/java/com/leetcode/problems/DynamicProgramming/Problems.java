@@ -17,8 +17,35 @@ public class Problems {
         Arrays.asList(2),
         Arrays.asList(3, 4),
         Arrays.asList(6, 5, 7),
+
         Arrays.asList(4, 1, 8, 3)
     );
+
+    //Problem 518
+    private int changeDP (int i,int j, int[] coins, int[][] dp){
+
+        if(i==0)
+            return 1;
+
+        if (dp[i][j]!=-1)
+            return dp[i][j];
+
+        int useCoin = i - coins[j]<0? 0 : changeDP (i - coins[j],j,coins, dp);
+        int notUseCoin =  j == 0?0:changeDP (i,j - 1,coins, dp);
+
+        dp[i][j] = useCoin + notUseCoin;
+        return dp[i][j];
+    }
+
+    public int change(int amount, int[] coins) {
+        int[][] dp = new int[amount + 1][coins.length];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        int result =  changeDP (amount, coins.length - 1 , coins, dp);
+
+        return result;
+    }
 
     //Problem 681
     public String nextClosestTime(String time) {
