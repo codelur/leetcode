@@ -1,5 +1,7 @@
 package com.leetcode.problems.DynamicProgramming;
 
+import java.util.HashMap;
+
 import javax.swing.tree.TreeNode;
 
 public class ProblemsLeetCode {
@@ -53,6 +55,32 @@ public class ProblemsLeetCode {
         return editRec( s,  t, 0, 0, 0);
 
     }
+
+    // Problem 294
+    public boolean canWin(String s) {
+    if (s == null || s.length() < 2) {
+        return false;
+    }
+    HashMap<String, Boolean> winMap = new HashMap<String, Boolean>();
+    return helper(s, winMap);
+}
+
+public boolean helper(String s, HashMap<String, Boolean> winMap) {
+    if (winMap.containsKey(s)) {
+        return winMap.get(s);
+    }
+    for (int i = 0; i < s.length() - 1; i++) {
+        if (s.startsWith("++", i)) {
+            String t = s.substring(0, i) + "--" + s.substring(i+2);
+            if (!helper(t, winMap)) {
+                winMap.put(s, true);
+                return true;
+            }
+        }
+    }
+    winMap.put(s, false);
+    return false;
+}
 
     //Problem 129
     int sumTotal = 0;
