@@ -1,6 +1,7 @@
 package com.leetcode.problems.DynamicProgramming;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.tree.TreeNode;
 
@@ -18,6 +19,40 @@ public class ProblemsLeetCode {
                  this.right = right;
              }
          }
+
+    HashMap<String,Boolean> map = new HashMap<>();
+    HashMap<String,Integer> wordCount = new HashMap<>();
+
+    private boolean isSub( String s,  String word){
+
+        int pointer = 0;
+        for (int i=0;i<s.length();i++){
+            if(word.charAt(pointer) == s.charAt(i)){
+                pointer++;
+                if (pointer == word.length()){
+                    map.put(word, true);
+                    return true;
+                }
+
+            }
+        }
+        return false;
+
+    }
+
+    //Problem 792
+    public int numMatchingSubseq(String s, String[] words) {
+        int count = 0;
+         for (String word: words){
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+         }
+        for (Map.Entry<String, Integer> entry: wordCount.entrySet()){
+            if(isSub(s, entry.getKey()))
+                count += entry.getValue();
+        }
+
+        return count;
+    }
 
     // Problem 161
     private boolean editRec(String s, String t, int indexS, int indexT, int changes){
