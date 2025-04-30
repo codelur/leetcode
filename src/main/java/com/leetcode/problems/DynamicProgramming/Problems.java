@@ -6,12 +6,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 
 public class Problems {
 
+
+    public static void main(String[] args) {
+
+        Problems problem = new Problems();
+        int[] heights = new int[]{1,2,3,4,3,1};
+        System.out.println(problem.calculateMaxSquare(heights));
+
+    }
 
     static List<List<Integer>> nestedList = Arrays.asList(
         Arrays.asList(2),
@@ -20,6 +29,43 @@ public class Problems {
 
         Arrays.asList(4, 1, 8, 3)
     );
+
+    //Problem 219
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i=0;i<nums.length;i++){
+            int num = nums[i];
+            if(map.containsKey(num)){
+                if (Math.abs(map.get(num) - i)<=k)
+                    return true;
+                else
+                    map.put(num,i);
+            }else{
+                map.put(num,i);
+            }
+        }
+        return false;
+    }
+    
+    //Problem Code
+    private int calculateMaxSquare(int[] heights){
+        int maxArea = 0;
+        int n = heights.length;
+
+        for (int i = 0; i < n; i++) {
+            int minHeight = heights[i];
+            for (int j = i; j < n; j++) {
+                minHeight = Math.min(minHeight, heights[j]);
+                int width = j - i + 1;
+                int side = Math.min(minHeight, width);
+                maxArea = Math.max(maxArea, side * side);
+            }
+        }
+
+        return maxArea;
+    }
+
+
 
     //Problem 518
     private int changeDP (int i,int j, int[] coins, int[][] dp){
@@ -353,26 +399,6 @@ public class Problems {
 
     }
 
-    public static void main(String[] args) {
-
-        Problems problem = new Problems();
-
-        int a = problem.integerReplacement(8);
-        List<String> words = new ArrayList<>();
-        words.add("a");
-        words.add("0");
-        System.out.println(Collections.min(words));
-
-        int[][] array = new int[9][9];
-        for(int i=0;i<array.length;i++)
-            Arrays.fill(array[i],-1);
-
-        int[] array2 = array[0];
-        array2[0] = 0;
-        System.out.println(array[0][1]);
-
-
-    }
 
 
     //Problem 583
