@@ -11,6 +11,8 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 
+import jdk.internal.net.http.common.Pair;
+
 public class Problems {
 
 
@@ -44,9 +46,56 @@ public class Problems {
                 map.put(num,i);
             }
         }
+
         return false;
     }
-    
+
+    //Problem 787
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        int[] prev = new int[n];
+        Arrays.fill(prev, Integer.MAX_VALUE);
+        prev[src] = 0;
+
+        for (int i=0;i<k+1;i++){
+            int[] curr = Arrays.copyOf(prev, n);
+            for(int[] flight: flights){
+                int from = flight[0];
+                int to = flight[1];
+                int price = flight[2];
+                if(prev[from]!=Integer.MAX_VALUE){
+                    curr[to] = Math.min(curr[to], prev[from] + price);
+                }
+            }
+            prev = curr;
+        }
+
+        return prev[dst] == Integer.MAX_VALUE? -1 : prev[dst];
+    }
+
+    //Problem 418
+    public int wordsTyping(String[] sentence, int rows, int cols) {
+
+        StringBuffer sb = new StringBuffer();
+        for(String word: sentence){
+            sb.append(word);
+            sb.append(" ");
+        }
+        int sentenceLength = sb.length();
+
+        int cursor = 0;
+        for (int i = 0;i<rows;i++){
+            cursor += cols;
+            if(sb.charAt(cursor % sentenceLength) != ' '){
+                while(cursor >0 && sb.charAt(cursor % sentenceLength) != ' ')
+                    cursor--;
+            }
+            cursor++;
+        }
+        return cursor / sentenceLength;
+    }
+    Pair<Integer,Integer> pair = new Pair<>(3,3);
+
+
     //Problem Code
     private int calculateMaxSquare(int[] heights){
         int maxArea = 0;
