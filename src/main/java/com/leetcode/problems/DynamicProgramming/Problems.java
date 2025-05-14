@@ -73,6 +73,27 @@ public class Problems {
     }
 
     //Problem 418
+    public int wordsTypingAux(String[] sentence, int rows, int cols) {
+
+        StringBuffer sb = new StringBuffer();
+        for(String word: sentence){
+            sb.append(word);
+            sb.append(" ");
+        }
+        int sentenceLength = sb.length();
+
+        int cursor = 0;
+        for (int i = 0;i<rows;i++){
+            cursor += cols;
+            if(sb.charAt(cursor % sentenceLength) != ' '){
+                while(cursor >0 && sb.charAt(cursor % sentenceLength) != ' ')
+                    cursor--;
+            }
+            cursor++;
+        }
+        return cursor / sentenceLength;
+    }
+    //Problem 418
     public int wordsTyping(String[] sentence, int rows, int cols) {
 
         StringBuffer sb = new StringBuffer();
